@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Cardiogram</title>
+	<link href="./source/style.css" rel="stylesheet" type="text/css">
+	<script language="javascript" type="text/javascript" src="./source/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="./source/jquery.canvaswrapper.js"></script>
+	<script language="javascript" type="text/javascript" src="./source/jquery.colorhelpers.js"></script>
+	<script language="javascript" type="text/javascript" src="./source/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="./source/jquery.flot.saturated.js"></script>
+	<script language="javascript" type="text/javascript" src="./source/jquery.flot.browser.js"></script>
+	<script language="javascript" type="text/javascript" src="./source/jquery.flot.drawSeries.js"></script>
+	<script language="javascript" type="text/javascript" src="./source/jquery.flot.uiConstants.js"></script>
+
+	<!-- Log file from app: -->
+	<script language="javascript" type="text/javascript" src="./log.js"></script>
+
+	<script type="text/javascript">
+
+	$(function() {
+
+		$.plot("#placeholder", [d]);
+		$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+	});
+
+	</script>
+</head>
+<body>
+	<div id="content">
+		<div class="demo-container">
+			<div id="placeholder" class="demo-placeholder"></div>
+		</div>
+	</div>
+</body>
+</html>
