@@ -18,6 +18,8 @@ To build diogram from log file just put it into RateDiogram folder, rename to lo
 ![RateDiogram script](https://github.com/seag86/lucid-dream-device/blob/main/RateDiogram/example_diogram.jpg)
 
 ## Arduino device scheme
+HM-10 module must be configured to 57600 baud rate by command "AT+BAUD3". Use "Arduino Bluetooth Controller" app for example.
+
 ![](https://github.com/seag86/lucid-dream-device/blob/main/images/scheme.png)
 
 ## Prototype photos
