@@ -11,6 +11,6 @@ Device measures heartrate with sensor MAX 30102. When you sleep your heartrate i
 
 
 ## Heart rate diogram from log file
-To build diogram from log file just put it to RateDiogram folder, rename to log.js and open index.html file. X axis shows time in seconds after app started, Y axis shows heartrate. RateDiogram can help determine your average dream heartrate treshold.
+To build diogram from log file just put it to RateDiogram folder, rename to log.js and open index.html file. X axis is the time in seconds after app started, Y axis is heartrate. RateDiogram can help determine your average dream heartrate treshold.
 
 ![RateDiogram script](https://github.com/seag86/lucid-dream-device/blob/main/RateDiogram/example_diogram.jpg)
