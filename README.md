@@ -7,7 +7,7 @@ Device measures heartrate with sensor MAX 30102. When you sleep your heartrate i
 ## Mobile application
  Home | Device  | Settings
 :-------------------------:|:-------------------------:|:-------------------------:
- ![](https://github.com/seag86/lucid-dream-device/blob/main/images/Screenshot_1.jpg) | ![](https://github.com/seag86/lucid-dream-device/blob/main/images/Screenshot_2.jpg) | ![](https://github.com/seag86/lucid-dream-device/blob/main/images/Screenshot_3.jpg) |
+ ![](https://github.com/seag86/lucid-dream-device/blob/main/images/Screenshot_1.jpg) | ![](https://github.com/seag86/lucid-dream-device/blob/main/images/Screenshot_2.jpg) | ![](https://github.com/seag86/lucid-dream-device/blob/main/images/Screenshot_3.jpg)  
 
 
 ## Heart rate diogram from log file
