@@ -21,6 +21,7 @@ import {
   setRepeatInterval,
   setRepeatCount,
   setBlinkCount,
+  setFirstDelay
 } from '../store/actions/main'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation';
@@ -181,6 +182,10 @@ const HomeScreen = ({
         const result7 = await AsyncStorage.getItem('@blinkcount')
         const blinkcount = result7 ? result7 : 5
         dispatch(setBlinkCount(blinkcount))
+
+        const result8 = await AsyncStorage.getItem('@firstdelay')
+        const firstdelay = result8 ? result8 : 60
+        dispatch(setFirstDelay(firstdelay))
 
         // Initial scan
         scanDevices(autocn)

@@ -7,6 +7,7 @@ import {
   SET_REPEAT_INTERVAL,
   SET_REPEAT_COUNT,
   SET_BLINK_COUNT,
+  SET_FIRST_DELAY,
   DEFAULTS,
 } from '../types'
 
@@ -70,5 +71,12 @@ export const setBlinkCount = (count) => {
 export const setDefaults = () => {
   return {
     type: DEFAULTS,
+  }
+}
+
+export const setFirstDelay = (delay) => {
+  return {
+    type: SET_FIRST_DELAY,
+    payload: delay
   }
 }

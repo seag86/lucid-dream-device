@@ -28,7 +28,7 @@ const Device = ({
   const dispatch = useDispatch()
 
   const { rateState, current, labels, rate, clock, reduceLabels, reduceRate, beat, dt, lastFlashTime, triggerFlashCount } = useSelector(state => state.rate)
-  const { breakTime, rateTreshold, repeatTime, repeatCount, blinkCount, device } = useSelector(state => state.main)
+  const { firstDelay, breakTime, rateTreshold, repeatTime, repeatCount, blinkCount, device } = useSelector(state => state.main)
 
   const [isConnected, setIsConnected] = useState(false);
   const [services, setServices] = useState<Service[]>([]);
@@ -37,13 +37,15 @@ const Device = ({
   const [staticLabels, setStaticLabels] = useState([])
   const [staticRates, setStaticRates] = useState([])
   const [hidePointsIndexes, setHidePointsIndexes] = useState([])
+  const [startTime] = useState(Date.now());
 
 
 
   useEffect(() => {
     setMsg('dT=' + dt+'s')
     //--- WakeUper --------------------------
-    if (current.rate > rateTreshold
+    if ( current.rate > rateTreshold
+      && Date.now() > ( startTime + firstDelay * 60 * 1000)
       && Date.now() > (lastFlashTime + breakTime * 60 * 1000)) {
       dispatch(incrementFlashCount())
       dispatch(updateLastFlashTime())

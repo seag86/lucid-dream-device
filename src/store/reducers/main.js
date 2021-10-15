@@ -7,11 +7,13 @@ import {
   SET_REPEAT_INTERVAL,
   SET_REPEAT_COUNT,
   SET_BLINK_COUNT,
+  SET_FIRST_DELAY,
   DEFAULTS,
 } from '../types'
 
 export const initialState = {
   // flash
+  firstDelay: 60, // min. to asleep
   breakTime: 5, // min. break
   repeatTime: 8, // sec.
   repeatCount: 5,
@@ -57,10 +59,10 @@ export const mainReducer = (state = initialState, action) => {
         breakTime: action.payload,
       }
 
-    case SET_BRAKE_TIME:
+    case SET_FIRST_DELAY:
       return {
         ...state,
-        breakTime: action.payload,
+        firstDelay: action.payload,
       }
 
     case SET_REPEAT_INTERVAL:

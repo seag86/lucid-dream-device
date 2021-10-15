@@ -5,6 +5,7 @@ import {
   setRateTreshold,
   setAutoConnect,
   setBleName,
+  setFirstDelay,
   setBrakeTime,
   setRepeatInterval,
   setRepeatCount,
@@ -38,7 +39,7 @@ const Settings = ({
   const dispatch = useDispatch()
 
   const [beat, setBeat] = useState(true);
-  const { breakTime, rateTreshold, repeatTime, repeatCount, defaultBleName, autoConnect, blinkCount } = useSelector(state => state.main)
+  const { firstDelay, breakTime, rateTreshold, repeatTime, repeatCount, defaultBleName, autoConnect, blinkCount } = useSelector(state => state.main)
 
 
   useEffect(() => {
@@ -103,6 +104,15 @@ const Settings = ({
     }
   }
 
+  const saveFirstDelay = async () => {
+    try {
+      const valid = firstDelay > breakTime && firstDelay < 720 ? firstDelay : 60
+      await AsyncStorage.setItem('@firstdelay', String(valid))
+    } catch (e) {
+      console.log('error saving')
+    }
+  }
+
   const defaults = async () => {
     dispatch(setDefaults())
       try {
@@ -113,6 +123,7 @@ const Settings = ({
         await AsyncStorage.setItem('@repeattime', String(initialState.repeatTime))
         await AsyncStorage.setItem('@repeatcount', String(initialState.repeatCount))
         await AsyncStorage.setItem('@blinkcount', String(initialState.blinkCount))
+        await AsyncStorage.setItem('@firstdelay', String(initialState.firstDelay))
       } catch (e) {
         console.log('error saving')
       }
@@ -163,6 +174,16 @@ const Settings = ({
           <View style={[s.hLine, s.mh15]} />
 
           <Text style={[s.text18, s.mt15, s.mh15]}>Flash settings</Text>
+          <View style={[s.hLine, s.mh15]} />
+
+          <Text style={[s.mt15, s.mh15]}>Delay before first trigger, min.</Text>
+          <TextInput
+            style={[s.mh15, s.ph10, s.tInput, s.aCenter]}
+            keyboardType="numeric"
+            onChangeText={(txt) => dispatch(setFirstDelay(Number(txt.replace(/[^0-9]/g, ""))))}
+            value={String(firstDelay)}
+            onBlur={saveFirstDelay}
+          />
           <View style={[s.hLine, s.mh15]} />
 
           <Text style={[s.mt15, s.mh15]}>Break time limit between flash trigger, min.</Text>
