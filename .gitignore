@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 # Rate diogram logs
-RateDiogram/*.js
+/RateDiogram/*.js
