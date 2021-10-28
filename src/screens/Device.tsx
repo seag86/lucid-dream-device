@@ -176,7 +176,7 @@ const Device = ({
           {/* <Text>{`Id : ${device.id}`}</Text> */}
           {/* <Text>{`Is connected : ${isConnected}`}</Text> */}
           <Text>{`RSSI : ${device.rssi}`}</Text>
-          <Text>{`Flash count: ${triggerFlashCount}`}</Text>
+          <Text>{`Flash count: `} <Text style={{ color: '#fff'}}>{triggerFlashCount}</Text></Text>
           <Text style={{ color: beat ? '#fff' : '#f99' }}>{`Msg : ` + msg}</Text>
         </View>
         <View >

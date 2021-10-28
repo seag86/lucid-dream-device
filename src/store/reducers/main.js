@@ -13,15 +13,15 @@ import {
 
 export const initialState = {
   // flash
-  firstDelay: 60, // min. to asleep
-  breakTime: 5, // min. break
-  repeatTime: 8, // sec.
-  repeatCount: 5,
-  blinkCount: 5,
+  firstDelay: 90, // min. to asleep
+  breakTime: 3, // min. break
+  repeatTime: 5, // sec.
+  repeatCount: 2,
+  blinkCount: 3,
 
   defaultBleName: 'Boba',
   autoConnect: false,
-  rateTreshold: 70,
+  rateTreshold: 60,
 
   device: null,
 

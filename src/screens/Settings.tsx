@@ -22,13 +22,14 @@ import {
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Torch from 'react-native-torch';
+import BackgroundTimer from 'react-native-background-timer';
 import { initialState } from '../store/reducers/main';
 
 import { RootStackParamList } from '../navigation/index';
 import s from '../styles/style';
 
 let ios = Platform.OS === 'ios' ? true : false
-
 
 
 const Settings = ({
@@ -42,9 +43,22 @@ const Settings = ({
   const { firstDelay, breakTime, rateTreshold, repeatTime, repeatCount, defaultBleName, autoConnect, blinkCount } = useSelector(state => state.main)
 
 
-  useEffect(() => {
+  const flashTest = () => {
+    let flashArray = []
+    for (let i = 0; i < blinkCount; i++) {
+      flashArray.push([true, i * 1000])
+      flashArray.push([false, i * 1000 + 500])
+    }
 
-  }, []);
+    for (let i = 0; i < repeatCount; i++) {
+      BackgroundTimer.setTimeout(() => {
+        flashArray.map(([tumbler, time]) => {
+          BackgroundTimer.setTimeout(() => Torch.switchState(tumbler), time)
+        })
+      }, repeatTime * 1000 * i)
+    }
+  }
+
 
   const saveRate = async () => {
     try {
@@ -115,18 +129,18 @@ const Settings = ({
 
   const defaults = async () => {
     dispatch(setDefaults())
-      try {
-        await AsyncStorage.setItem('@rate', String(initialState.rateTreshold))
-        await AsyncStorage.setItem('@brake', String(initialState.breakTime))
-        await AsyncStorage.setItem('@blename', initialState.defaultBleName)
-        await AsyncStorage.setItem('@autoconnect', String(initialState.autoConnect))
-        await AsyncStorage.setItem('@repeattime', String(initialState.repeatTime))
-        await AsyncStorage.setItem('@repeatcount', String(initialState.repeatCount))
-        await AsyncStorage.setItem('@blinkcount', String(initialState.blinkCount))
-        await AsyncStorage.setItem('@firstdelay', String(initialState.firstDelay))
-      } catch (e) {
-        console.log('error saving')
-      }
+    try {
+      await AsyncStorage.setItem('@rate', String(initialState.rateTreshold))
+      await AsyncStorage.setItem('@brake', String(initialState.breakTime))
+      await AsyncStorage.setItem('@blename', initialState.defaultBleName)
+      await AsyncStorage.setItem('@autoconnect', String(initialState.autoConnect))
+      await AsyncStorage.setItem('@repeattime', String(initialState.repeatTime))
+      await AsyncStorage.setItem('@repeatcount', String(initialState.repeatCount))
+      await AsyncStorage.setItem('@blinkcount', String(initialState.blinkCount))
+      await AsyncStorage.setItem('@firstdelay', String(initialState.firstDelay))
+    } catch (e) {
+      console.log('error saving')
+    }
   }
 
 
@@ -228,15 +242,19 @@ const Settings = ({
           />
           <View style={[s.hLine, s.mh15]} />
 
+          <View style={[s.mh15, s.mt15, s.mb10]}>
+            <Button
+              title="test flash"
+              onPress={flashTest}
+            />
+          </View>
+
           <View style={[s.mh15, s.mt15, s.mb20]}>
             <Button
               title="defaults"
               onPress={defaults}
             />
           </View>
-
-
-
 
         </ScrollView>
       </KeyboardAvoidingView >
