@@ -115,84 +115,86 @@ const HomeScreen = ({
     </View>
   );
 
+  // BLE permissions
+  let requestPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'Dream App',
+          'message': 'Dream App access to your location for BLE'
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use BLE")
+      } else {
+        console.log("location permission denied")
+      }
+    } catch (err) {
+      console.warn(err)
+    }
+
+    // Torch
+    try {
+      const cameraAllowed = await Torch.requestCameraPermission(
+        'Camera Permissions', // dialog title
+        'We require camera permissions to use the torch on the back of your phone.' // dialog body
+      );
+      if (cameraAllowed) {
+        console.log("Torch allowed")
+      } else {
+        console.log("Using torch denied")
+      }
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
+  // Load settings
+  const loadSettings = async () => {
+    try {
+      const result = await AsyncStorage.getItem('@rate')
+      const rate = Number(result)
+      if (rate > 20 && rate < 150) dispatch(setRateTreshold(Number(result)))
+      else dispatch(setRateTreshold(70))
+
+      const result2 = await AsyncStorage.getItem('@brake')
+      let brake = result2 ? Number(result2) : 10
+      dispatch(setBrakeTime(Number(brake)))
+
+      const result3 = await AsyncStorage.getItem('@blename')
+      dispatch(setBleName(result3))
+
+      const result4 = await AsyncStorage.getItem('@autoconnect')
+      const autocn = result4 == 'true'
+      dispatch(setAutoConnect(autocn))
+
+      const result5 = await AsyncStorage.getItem('@repeattime')
+      const repeattime = result5 ? result5 : 8
+      dispatch(setRepeatInterval(repeattime))
+
+      const result6 = await AsyncStorage.getItem('@repeatcount')
+      const repeatcount = result6 ? result6 : 5
+      dispatch(setRepeatCount(repeatcount))
+
+      const result7 = await AsyncStorage.getItem('@blinkcount')
+      const blinkcount = result7 ? result7 : 5
+      dispatch(setBlinkCount(blinkcount))
+
+      const result8 = await AsyncStorage.getItem('@firstdelay')
+      const firstdelay = result8 ? result8 : 60
+      dispatch(setFirstDelay(firstdelay))
+
+      // Initial scan
+      scanDevices(autocn)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   useEffect(() => {
-    // BLE permissions
-    let requestPermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            'title': 'Dream App',
-            'message': 'Dream App access to your location for BLE'
-          }
-        )
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log("You can use BLE")
-        } else {
-          console.log("location permission denied")
-        }
-      } catch (err) {
-        console.warn(err)
-      }
 
-      // Torch
-      try {
-        const cameraAllowed = await Torch.requestCameraPermission(
-          'Camera Permissions', // dialog title
-          'We require camera permissions to use the torch on the back of your phone.' // dialog body
-        );
-        if (cameraAllowed) {
-          console.log("Torch allowed")
-        } else {
-          console.log("Using torch denied")
-        }
-      } catch (err) {
-        console.warn(err)
-      }
-    }
     requestPermission()
-
-    // Load settings
-    const loadSettings = async () => {
-      try {
-        const result = await AsyncStorage.getItem('@rate')
-        const rate = Number(result)
-        if (rate > 20 && rate < 150) dispatch(setRateTreshold(Number(result)))
-        else dispatch(setRateTreshold(70))
-
-        const result2 = await AsyncStorage.getItem('@brake')
-        let brake = result2 ? Number(result2) : 10
-        dispatch(setBrakeTime(Number(brake)))
-
-        const result3 = await AsyncStorage.getItem('@blename')
-        dispatch(setBleName(result3))
-
-        const result4 = await AsyncStorage.getItem('@autoconnect')
-        const autocn = result4 == 'true'
-        dispatch(setAutoConnect(autocn))
-
-        const result5 = await AsyncStorage.getItem('@repeattime')
-        const repeattime = result5 ? result5 : 8
-        dispatch(setRepeatInterval(repeattime))
-
-        const result6 = await AsyncStorage.getItem('@repeatcount')
-        const repeatcount = result6 ? result6 : 5
-        dispatch(setRepeatCount(repeatcount))
-
-        const result7 = await AsyncStorage.getItem('@blinkcount')
-        const blinkcount = result7 ? result7 : 5
-        dispatch(setBlinkCount(blinkcount))
-
-        const result8 = await AsyncStorage.getItem('@firstdelay')
-        const firstdelay = result8 ? result8 : 60
-        dispatch(setFirstDelay(firstdelay))
-
-        // Initial scan
-        scanDevices(autocn)
-      } catch (e) {
-        console.log(e)
-      }
-    }
     loadSettings()
 
     return () => {
